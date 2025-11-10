@@ -16,15 +16,15 @@ export default function RegisterForm() {
     e.preventDefault();
     setError(null);
 
-    if (!email || !password) {
-      setError("Email и пароль обязательны");
+    if (!email || !password || !username) {
+      setError("Пожалуйста, заполните все поля");
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4500/api/register", {
+      const res = await fetch("http://localhost:4500/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,17 +34,19 @@ export default function RegisterForm() {
 
       const data = await res.json().catch(() => null);
 
+      console.log("Статус ответа:", res.status);
+      console.log("Объект ответа:", data);
+
       if (res.status === 201 || res.ok) {
         console.log("Аккаунт успешно зарегистрирован", data);
         router.push("/login");
-      } else if (res.status === 409) {
-        setError(data?.error?.message ?? "Email уже занят");
       } else if (res.status === 400) {
-        setError(data?.error?.message ?? "Неправильные данные");
+        setError(data?.message ?? "Пользователь с таким email уже существует");
       } else {
-        setError(data?.error?.message ?? `Ошибка ${res.status}`);
+        setError(data?.message ?? `Ошибка ${res.status}`);
       }
     } catch (err: any) {
+      console.error("Ошибка fetchа:", err);
       setError(err?.message ?? "Сетевая ошибка");
     } finally {
       setLoading(false);
@@ -55,6 +57,11 @@ export default function RegisterForm() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 text-black">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 text-black">
         <h1 className="text-2xl font-semibold mb-2 text-black">Регистрация</h1>
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
 
         <form
           onSubmit={handleSubmit}
@@ -68,12 +75,12 @@ export default function RegisterForm() {
             <input
               id="username"
               name="username"
-              type="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
+              disabled={loading}
             />
-            <p id="username-error" className="mt-1 text-sm text-red-600 hidden">
-              {}
-            </p>
           </div>
 
           <div>
@@ -84,11 +91,11 @@ export default function RegisterForm() {
               id="email"
               name="email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
+              disabled={loading}
             />
-            <p id="email-error" className="mt-1 text-sm text-red-600 hidden">
-              {}
-            </p>
           </div>
 
           <div>
@@ -100,33 +107,21 @@ export default function RegisterForm() {
                 id="password"
                 name="password"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
+                disabled={loading}
               />
-              <button
-                type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-slate-500"
-              >
-                Показать
-              </button>
             </div>
-            <p id="password-error" className="mt-1 text-sm text-red-600 hidden">
-              {}
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" name="remember" className="h-4 w-4" />
-              <span>Запомнить меня</span>
-            </label>
           </div>
 
           <div>
             <button
               type="submit"
-              className="w-full px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+              disabled={loading}
+              className="w-full px-4 py-2 bg-black text-white rounded hover:bg-gray-800 disabled:bg-gray-400"
             >
-              Зарегистрироваться
+              {loading ? "Регистрация..." : "Зарегистрироваться"}
             </button>
           </div>
         </form>
