@@ -69,7 +69,6 @@ export default function ProfilePage() {
               {[
                 { id: 'profile', label: '👤 Профиль', icon: '👤' },
                 { id: 'settings', label: '⚙️ Настройки', icon: '⚙️' },
-                { id: 'orders', label: '📦 Заказы', icon: '📦' },
                 { id: 'reviews', label: '⭐ Отзывы', icon: '⭐' },
               ].map((tab) => (
                 <button

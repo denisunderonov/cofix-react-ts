@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import Link from "next/link";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../contexts/AuthContext"; // Исправляем путь к контексту
 
 const UNAUTH_NAV = [
   { href: "/reviews", label: "Отзывы" },
@@ -18,8 +18,27 @@ const AUTH_NAV = [
 ];
 
 export default function Header() {
-
   const { isAuthenticated, user, loading, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    // Можно добавить редирект на главную страницу
+    window.location.href = "/";
+  };
+
+  // Показываем заглушку во время загрузки
+  if (loading) {
+    return (
+      <header className="bg-black shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="font-bold text-xl text-white">CofixKurskaya</Link>
+          <nav className="space-x-4">
+            <div className="text-white animate-pulse">Загрузка...</div>
+          </nav>
+        </div>
+      </header>
+    );
+  }
 
   const navItems = isAuthenticated ? AUTH_NAV : UNAUTH_NAV;
 
@@ -27,13 +46,36 @@ export default function Header() {
     <header className="bg-black shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="font-bold text-xl text-white">CofixKurskaya</Link>
-        <nav className="space-x-4">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="text-white hover:underline">
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        
+        <div className="flex items-center space-x-6">
+          {/* Основная навигация */}
+          <nav className="space-x-4">
+            {navItems.map((item) => (
+              <Link 
+                key={item.href} 
+                href={item.href} 
+                className="text-white hover:underline transition duration-200"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Блок пользователя (только для авторизованных) */}
+          {isAuthenticated && user && (
+            <div className="flex items-center space-x-4 border-l border-gray-600 pl-4">
+              <span className="text-white text-sm">
+                Привет, {user.username}!
+              </span>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition duration-200"
+              >
+                Выйти
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
