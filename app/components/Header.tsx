@@ -4,19 +4,21 @@ import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext"; // Исправляем путь к контексту
 
 const UNAUTH_NAV = [
-  { href: "/news", label: "НОВОСТИ" },
-  { href: "/reviews", label: "ОТЗЫВЫ" },
-  { href: "/about", label: "О САЙТЕ" },
-  { href: "/galery", label: "ГАЛЕРЕЯ" },
-  { href: "/login", label: "ВОЙТИ" },
+  { href: "/news", label: "Новости" },
+  { href: "/menu", label: "Меню" },
+  { href: "/reviews", label: "Отзывы" },
+  { href: "/about", label: "О сайте" },
+  { href: "/galery", label: "Галерея" },
+  { href: "/login", label: "Профиль" }
 ];
 
 const AUTH_NAV = [
-  { href: "/news", label: "НОВОСТИ" },
-  { href: "/reviews", label: "ОТЗЫВЫ" },
-  { href: "/about", label: "О САЙТЕ" },
-  { href: "/galery", label: "ГАЛЕРЕЯ" },
-  { href: "/profile", label: "ПРОФИЛЬ" },
+  { href: "/news", label: "Новости" },
+  { href: "/menu", label: "Меню" },
+  { href: "/reviews", label: "Отзывы" },
+  { href: "/about", label: "О сайте" },
+  { href: "/galery", label: "Галерея" },
+  { href: "/profile", label: "Профиль" },
 ];
 
 export default function Header() {
