@@ -4,17 +4,19 @@ import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext"; // Исправляем путь к контексту
 
 const UNAUTH_NAV = [
-  { href: "/reviews", label: "Отзывы" },
-  { href: "/about", label: "О сайте" },
-  { href: "/galery", label: "Галерея" },
-  { href: "/login", label: "Войти" },
+  { href: "/news", label: "НОВОСТИ" },
+  { href: "/reviews", label: "ОТЗЫВЫ" },
+  { href: "/about", label: "О САЙТЕ" },
+  { href: "/galery", label: "ГАЛЕРЕЯ" },
+  { href: "/login", label: "ВОЙТИ" },
 ];
 
 const AUTH_NAV = [
-  { href: "/reviews", label: "Отзывы" },
-  { href: "/about", label: "О сайте" },
-  { href: "/galery", label: "Галерея" },
-  { href: "/profile", label: "Профиль" },
+  { href: "/news", label: "НОВОСТИ" },
+  { href: "/reviews", label: "ОТЗЫВЫ" },
+  { href: "/about", label: "О САЙТЕ" },
+  { href: "/galery", label: "ГАЛЕРЕЯ" },
+  { href: "/profile", label: "ПРОФИЛЬ" },
 ];
 
 export default function Header() {
@@ -31,7 +33,7 @@ export default function Header() {
     return (
       <header className="bg-black shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="font-bold text-xl text-white">CofixKurskaya</Link>
+          <Link href="/" className="font-bold text-xl text-white">Cofix на Курской</Link>
           <nav className="space-x-4">
             <div className="text-white animate-pulse">Загрузка...</div>
           </nav>
@@ -45,7 +47,7 @@ export default function Header() {
   return (
     <header className="bg-black shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="font-bold text-xl text-white">CofixKurskaya</Link>
+        <Link href="/" className="font-bold text-xl text-white">Cofix на Курской</Link>
         
         <div className="flex items-center space-x-6">
           {/* Основная навигация */}
@@ -54,7 +56,7 @@ export default function Header() {
               <Link 
                 key={item.href} 
                 href={item.href} 
-                className="text-white hover:underline transition duration-200"
+                className="text-white font-bold text-xl hover:underline transition duration-200"
               >
                 {item.label}
               </Link>
@@ -64,15 +66,7 @@ export default function Header() {
           {/* Блок пользователя (только для авторизованных) */}
           {isAuthenticated && user && (
             <div className="flex items-center space-x-4 border-l border-gray-600 pl-4">
-              <span className="text-white text-sm">
-                Привет, {user.username}!
-              </span>
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition duration-200"
-              >
-                Выйти
-              </button>
+              
             </div>
           )}
         </div>

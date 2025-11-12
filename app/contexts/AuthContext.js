@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => { // создает компоне
 
     const login = (userData, token) => {
         localStorage.setItem('authToken', token);
-        localStorage.setitem('userData', JSON.stringify);
+        localStorage.setItem('userData', JSON.stringify(userData));
         setUser(userData);
         setIsAuthenticated(true)
     }
