@@ -7,7 +7,6 @@ const UNAUTH_NAV = [
   { href: "/news", label: "Новости" },
   { href: "/menu", label: "Меню" },
   { href: "/reviews", label: "Отзывы" },
-  { href: "/about", label: "О сайте" },
   { href: "/galery", label: "Галерея" },
   { href: "/login", label: "Профиль" }
 ];
@@ -16,7 +15,6 @@ const AUTH_NAV = [
   { href: "/news", label: "Новости" },
   { href: "/menu", label: "Меню" },
   { href: "/reviews", label: "Отзывы" },
-  { href: "/about", label: "О сайте" },
   { href: "/galery", label: "Галерея" },
   { href: "/profile", label: "Профиль" },
 ];
@@ -26,11 +24,9 @@ export default function Header() {
 
   const handleLogout = () => {
     logout();
-    // Можно добавить редирект на главную страницу
     window.location.href = "/";
   };
 
-  // Показываем заглушку во время загрузки
   if (loading) {
     return (
       <header className="bg-black shadow-sm">
