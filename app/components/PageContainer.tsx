@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import styles from "./PageContainer.module.scss";
+import Breadcrumbs from "./Breadcrumbs";
 
 type Props = {
   children: React.ReactNode;
@@ -8,7 +10,8 @@ type Props = {
 
 export default function PageContainer({ children }: Props) {
   return (
-    <main className={`container mx-auto px-4 py-10`}>
+    <main className={styles.container}>
+      <Breadcrumbs />
       {children}
     </main>
   );

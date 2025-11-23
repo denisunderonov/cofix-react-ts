@@ -1,0 +1,18 @@
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15,17,32,0.12);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  z-index: 9999;
+}
+.message { font-weight:600; }
+.action { background: transparent; border: none; color: var(--color-primary); font-weight:700; cursor:pointer; }
+.success { border-left: 4px solid rgba(var(--color-primary-rgb),0.9); }
+.error { border-left: 4px solid rgba(var(--color-danger-rgb),0.9); }

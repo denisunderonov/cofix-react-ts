@@ -1,0 +1,84 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(15,17,32,0.06);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  height: 100%;
+  min-height: 380px;
+}
+.cardLink { display:block; text-decoration:none; color:inherit; height: 100%; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(15,17,32,0.08); }
+
+/* Edit button (creator only) positioned at top-right of card */
+.editBtn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: rgba(var(--color-primary-rgb),0.08);
+  border: 1px solid rgba(var(--color-primary-rgb),0.12);
+  color: var(--color-text);
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition: transform 120ms ease, box-shadow 150ms ease;
+}
+.editBtn:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(15,17,32,0.06); }
+
+.media {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: rgba(15,17,32,0.02);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.media img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  display: block;
+}
+
+.body { padding: 16px; display:flex; flex-direction:column; gap:8px; flex-grow: 1; }
+.titleRow { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.name { font-weight:800; color:var(--color-text); font-size:1.02rem; }
+.price { font-weight:700; color:var(--color-primary); }
+.desc { 
+  color:var(--color-muted); 
+  font-size:0.95rem; 
+  line-height:1.4; 
+  max-height:3.6em; 
+  overflow:hidden;
+  flex-grow: 1;
+}
+
+.rating { display:flex; align-items:center; gap:8px; margin-top:auto; padding-top: 8px; }
+.stars { display:flex; gap:4px; }
+.star { width:14px; height:14px; color: rgba(0,0,0,0.08); }
+.starFilled { color: var(--color-accent); }
+.ratingNumber { font-size:0.95rem; color: var(--color-on-primary); background: var(--color-primary); padding:6px 10px; border-radius:10px; font-weight:800; box-shadow: 0 8px 20px rgba(var(--color-primary-rgb),0.12); }
+
+.actions { display:flex; gap:8px; margin-top:8px; }
+.btnLink { background: transparent; border: 1px solid rgba(var(--color-primary-rgb),0.12); color: var(--Color-primary, var(--color-primary)); padding:6px 8px; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:700; }
+
+@media (min-width: 900px) {
+  .media { height: 220px; }
+  .card { min-height: 420px; }
+}
+
+@media (max-width: 600px) {
+  .card { min-height: 360px; }
+  .media { height: 180px; }
+}

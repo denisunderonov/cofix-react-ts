@@ -1,0 +1,26 @@
+.usersWrap { width:100%; overflow-x:auto; }
+.usersTable { width:100%; border-collapse:collapse; min-width:640px; }
+.usersTable th, .usersTable td { text-align:left; padding:12px 10px; border-bottom:1px solid rgba(15,17,32,0.04); }
+.usersTable thead th { background: rgba(var(--color-primary-rgb),0.04); color: var(--color-muted); font-weight:700; }
+.roleBadge { padding:6px 10px; border-radius:999px; background: rgba(var(--color-primary-rgb),0.06); color: var(--color-text); font-weight:700; }
+.selectRole { padding:8px 10px; border-radius:8px; border:1px solid rgba(15,17,32,0.06); }
+
+@media (max-width:700px) {
+  .usersTable { min-width: 100%; }
+  .usersTable th, .usersTable td { padding:10px 8px; }
+}
+
+/* Undo toast */
+.undoToast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 24px;
+  background: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15,17,32,0.12);
+  padding: 12px 16px;
+  display:flex; gap:12px; align-items:center; z-index: 9999;
+}
+.undoMsg { color: var(--color-text); font-weight:600; }
+.undoBtn { background: transparent; border: none; color: var(--color-primary); font-weight:700; cursor:pointer; }

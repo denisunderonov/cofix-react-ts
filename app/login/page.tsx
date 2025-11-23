@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
+import PageContainer from "../components/PageContainer";
+import styles from "../auth.module.scss";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -25,12 +27,15 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4500/api/auth/login", {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4500";
+      // send identifier as both username and email so backend can match either
+      const identifier = username;
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: identifier, email: identifier, password }),
       });
       const data = await res.json().catch(() => null);
       console.log("Статус ответа:", res.status);
@@ -56,68 +61,36 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 text-black">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 text-black">
-        <h1 className="text-2xl font-semibold mb-2 text-black">Вход</h1>
+    <PageContainer>
+      <div className={styles.authWrap}>
+        <div className={styles.card}>
+        <h1 className={styles.title}>Вход</h1>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-            {error}
-          </div>
+          <div className={styles.error}>{error}</div>
         )}
 
-        <form
-          className="space-y-4"
-          aria-label="login form"
-          onSubmit={handleSabmit}
-        >
-          {/* Остальная форма без изменений */}
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium">
-              Имя пользователя
-            </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
-              disabled={loading}
-            />
+        <form onSubmit={handleSabmit} aria-label="login form">
+          <div className={styles.field}>
+            <label htmlFor="username" className={styles.label}>Имя пользователя или почта</label>
+            <input id="username" name="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} disabled={loading} placeholder="username или email" />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium">
-              Пароль
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
-              disabled={loading}
-            />
+          <div className={styles.field}>
+            <label htmlFor="password" className={styles.label}>Пароль</label>
+            <input id="password" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input} disabled={loading} />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full px-4 py-2 bg-black text-white rounded hover:bg-gray-800 disabled:bg-gray-400"
-          >
-            {loading ? "Вход..." : "Войти"}
-          </button>
+          <div style={{marginTop:12}}>
+            <button type="submit" disabled={loading} className={`${styles.btn} ${loading ? styles.btnDisabled : styles.btnPrimary}`}>{loading ? 'Вход...' : 'Войти'}</button>
+          </div>
 
-          <div className="text-center text-sm text-slate-500">
-            Нет аккаунта?{" "}
-            <Link href="../register" className="text-amber-600 hover:underline">
-              Зарегистрироваться
-            </Link>
+          <div style={{textAlign:'center', marginTop:12, color:'var(--color-muted)'}}>
+            Нет аккаунта? <Link href="../register" style={{color:'var(--color-primary)', fontWeight:700}}>Зарегистрироваться</Link>
           </div>
         </form>
+        </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

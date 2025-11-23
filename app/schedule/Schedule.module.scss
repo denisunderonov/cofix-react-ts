@@ -1,0 +1,361 @@
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    color: var(--color-text);
+  }
+}
+
+.addBtn {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.weekNav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.navBtn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.currentBtn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.weekRange {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.loading {
+  text-align: center;
+  padding: 48px;
+  color: var(--color-text-secondary);
+}
+
+/* Табличный вид */
+.tableWrapper {
+  overflow-x: auto;
+  background: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.scheduleTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+
+  thead {
+    background: rgba(var(--color-primary-rgb), 0.08);
+    
+    th {
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      border-bottom: 2px solid var(--color-border);
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid var(--color-border);
+
+      &:hover {
+        background: var(--color-hover);
+      }
+    }
+
+    td {
+      padding: 12px 8px;
+      text-align: center;
+      vertical-align: top;
+    }
+  }
+}
+
+.employeeCol {
+  text-align: left !important;
+  min-width: 180px;
+}
+
+.dayCol {
+  min-width: 120px;
+
+  .date {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+  }
+}
+
+.totalCol {
+  min-width: 100px;
+}
+
+.employeeCell {
+  text-align: left !important;
+}
+
+.employeeInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.username {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dayCell {
+  vertical-align: top !important;
+}
+
+.shiftBlock {
+  background: rgba(var(--color-primary-rgb), 0.12);
+  border-left: 3px solid var(--color-primary);
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  text-align: left;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.shiftTime {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.shiftHours {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.totalCell {
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+/* Карточный вид (мобильные) */
+.cardsView {
+  display: grid;
+  gap: 16px;
+}
+
+.dayCard {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.dayCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--color-border);
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-text);
+  }
+}
+
+.dayCardDate {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.noShifts {
+  text-align: center;
+  padding: 24px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.shiftsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shiftCard {
+  background: rgba(var(--color-primary-rgb), 0.08);
+  border-left: 3px solid var(--color-primary);
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.shiftCardEmployee {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+
+  span {
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.shiftAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.shiftAvatarPlaceholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.shiftCardTime {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.shiftCardHours {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    h1 {
+      font-size: 24px;
+    }
+  }
+
+  .addBtn {
+    width: 100%;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .weekNav {
+    justify-content: space-between;
+  }
+
+  .weekRange {
+    text-align: center;
+  }
+}

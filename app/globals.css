@@ -1,28 +1,106 @@
-@import "tailwindcss";
+/* Tailwind directives removed — project migrated to SCSS (see app/globals.scss) */
+/* @tailwind base; @tailwind components; @tailwind utilities; */
 
+/* Palette provided by the designer
+   Primary: MILK  #EC5E27
+   Dark  : GRAY BLUE  #2b323f
+   We'll expose several related variables for backgrounds, text and accents.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
+  /* core palette */
+  --color-primary: #EC5E27;        /* accent / action color */
+  --color-primary-rgb: 236, 94, 39;
+  --color-dark: #2b323f;           /* primary dark background / headings */
+
+  /* supporting neutrals */
+  --color-bg: #F7F6F2;             /* very light cream background */
+  --color-surface: #FFFFFF;        /* surface (cards, panels) */
+  --color-muted: #6B7380;          /* muted text / secondary */
+
+  /* accents */
+  --color-accent: #FFB480;         /* lighter warm accent */
+  --color-success: #2ECC71;
+  --color-danger: #E04B3A;
+
+  /* text on colors */
+  --color-on-primary: #ffffff;
+  --color-on-dark: #ffffff;
+  --color-text: #0f1720;           /* primary readable text */
+
+  /* utility tokens */
+  --border-radius: 8px;
+  --container-max: 1200px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark theme variables */
+[data-theme="dark"] {
+  /* core palette - adjusted for dark mode */
+  --color-primary: #FF8C61;        /* warm coral - bright and visible */
+  --color-primary-rgb: 255, 140, 97;
+  --color-dark: #e5e7eb;           /* light for text on dark bg */
+
+  /* supporting neutrals - inverted */
+  --color-bg: #121212;             /* true dark background */
+  --color-surface: #1e1e1e;        /* slightly lighter dark surface */
+  --color-muted: #a0aec0;          /* light gray for secondary text */
+
+  /* accents - adjusted */
+  --color-accent: #FFB380;         /* keep warm accent */
+  --color-success: #4ade80;        /* bright green for visibility */
+  --color-danger: #f87171;         /* bright red for visibility */
+
+  /* text on colors */
+  --color-on-primary: #ffffff;
+  --color-on-dark: #121212;        /* dark text on light backgrounds */
+  --color-text: #f0f0f0;           /* very light text for high contrast */
 }
 
-/* Force a white background and black text by default */
+/* Basic reset using the tokens above */
 html, body {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
   margin: 0;
 }
 
-/* Keep CSS variables in sync if other components use them */
+
+
+/* keep backwards-compatible variables for components that may expect them */
 body {
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
 }
+
+/* Small set of utility helper classes (used where Tailwind class can't be applied) */
+.bg-primary { background-color: var(--color-primary) !important; }
+.text-primary { color: var(--color-primary) !important; }
+.bg-dark { background-color: var(--color-dark) !important; }
+.text-dark { color: var(--color-dark) !important; }
+.text-on-primary { color: var(--color-on-primary) !important; }
+.muted { color: var(--color-muted) !important; }
+.surface { background-color: var(--color-surface) !important; }
+.rounded-md { border-radius: var(--border-radius) !important; }
+
+/* Example component tokens to make components look cohesive */
+.card {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--border-radius);
+  box-shadow: 0 1px 4px rgba(15,17,32,0.06);
+}
+
+/* Ensure links and primary actions use the primary color */
+a, .btn-primary {
+  color: var(--color-primary);
+}
+
+/* Buttons that need filled style */
+.btn-filled {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+

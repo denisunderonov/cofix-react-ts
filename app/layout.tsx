@@ -1,19 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import { AuthProvider } from "@/app/contexts/AuthContext";
+import { ThemeProvider } from "@/app/contexts/ThemeContext";
 
 import Header from "./components/Header";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "CofixKurskaya",
@@ -26,12 +17,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`bg-white`}>
-        <AuthProvider>
-          <Header />
-          {children}
-        </AuthProvider>
+    <html lang="ru">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme') || 
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="app-root">
+        <ThemeProvider>
+          <AuthProvider>
+            <Header />
+            <main>
+              {children}
+            </main>
+            <Footer />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

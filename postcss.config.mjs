@@ -1,6 +1,7 @@
+// PostCSS config - Tailwind removed, keep empty plugins object for future plugins
 const config = {
   plugins: {
-    "@tailwindcss/postcss": {},
+    // add autoprefixer or other plugins here if needed
   },
 };
 

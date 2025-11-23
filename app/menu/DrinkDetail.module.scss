@@ -1,0 +1,132 @@
+.wrap { max-width: var(--container-max); margin: 0 auto; padding: 20px; }
+.header { display:flex; flex-direction:column; gap:12px; }
+.hero { width:100%; height:320px; object-fit:cover; border-radius:12px; }
+.titleRow { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.title { font-size:2rem; color:var(--color-text); margin:0; }
+.price { color:var(--color-primary); font-weight:800; }
+.adminActions { display:flex; gap:8px; align-items:center; }
+.adminActions a { text-decoration:none; }
+.meta { color:var(--color-muted); font-size:0.95rem; }
+
+.content { display:flex; gap:24px; margin-top:18px; }
+.description { flex:1; background:var(--color-surface); padding:16px; border-radius:12px; box-shadow:0 8px 22px rgba(15,17,32,0.04); }
+
+.reviewsSection { flex:1; min-width:320px; }
+.addReview { display:flex; flex-direction:column; gap:8px; background: rgba(var(--color-primary-rgb),0.03); padding:12px; border-radius:12px; border:1px solid rgba(var(--color-primary-rgb),0.08); margin-bottom:12px; }
+.addReview textarea { min-height:80px; padding:8px; border-radius:8px; border:1px solid rgba(15,17,32,0.06); }
+.reviewsList { display:flex; flex-direction:column; gap:12px; }
+.reviewItem { background:var(--color-surface); padding:12px; border-radius:10px; border:1px solid rgba(15,17,32,0.04); }
+.reviewHeader { display:flex; justify-content:space-between; align-items:start; gap:12px; margin-bottom:4px; }
+.revMeta { color:var(--color-muted); font-size:0.9rem; white-space:nowrap; }
+.empty { color:var(--color-muted); }
+
+/* Minimalist rating control */
+.ratingRow { display:flex; gap:8px; align-items:center; }
+.ratingBtn { width:36px; height:36px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid rgba(15,17,32,0.06); background:transparent; color:var(--color-muted); font-weight:700; }
+.ratingBtn:hover { background: rgba(var(--color-primary-rgb),0.04); color: var(--color-text); transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 20px rgba(15,17,32,0.06); }
+.ratingBtnActive { background: linear-gradient(90deg, rgba(var(--color-primary-rgb),0.95), rgba(var(--color-primary-rgb),0.85)); color: var(--color-on-primary); border-color: transparent; transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 28px rgba(var(--color-primary-rgb),0.12); }
+.ratingBtn, .ratingBtnActive { transition: transform 140ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms ease, background-color 120ms linear, color 120ms linear; }
+
+/* Ensure active state keeps precedence over hover/focus */
+.ratingBtnActive:hover,
+.ratingBtnActive:focus,
+.ratingBtnActive:active {
+  background: linear-gradient(90deg, rgba(var(--color-primary-rgb),0.95), rgba(var(--color-primary-rgb),0.85));
+  color: var(--color-on-primary);
+  border-color: transparent;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(var(--color-primary-rgb),0.12);
+}
+
+.addReview .submitBtn { width:100%; padding:10px 12px; border-radius:10px; border:none; cursor:pointer; background:var(--color-primary); color:var(--color-on-primary); font-weight:700; }
+
+.addReview .submitBtn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(var(--color-primary-rgb),0.12); }
+.addReview .submitBtn:active { transform: translateY(0); }
+
+/* Review item hover lift */
+.reviewItem { transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 200ms ease; }
+.reviewItem:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,17,32,0.06); }
+
+/* Card hover (for drink cards that reuse these styles) */
+.cardHoverable { transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 200ms ease; }
+.cardHoverable:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(15,17,32,0.08); }
+
+/* Ensure comment text is visible */
+.reviewItem p { color: var(--color-text); margin: 8px 0; }
+.reviewHeader strong { color: var(--color-text); }
+
+/* Avatar styles for reviews */
+.avatarWrapper {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.reviewAvatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(var(--color-primary-rgb),0.12);
+  flex-shrink: 0;
+  display: block;
+}
+.reviewAvatarPlaceholder {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+  border: 2px solid rgba(var(--color-primary-rgb),0.12);
+}
+
+.deleteBtn {
+  background: transparent;
+  border: none;
+  color: var(--color-danger);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.deleteBtn:hover {
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.btnOutline {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  color: var(--color-primary);
+  background: transparent;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btnOutline:hover {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(var(--color-primary-rgb), 0.2);
+}
+
+@media (max-width: 900px) {
+  .content { flex-direction:column; }
+  .hero { height:200px; }
+}

@@ -16,6 +16,12 @@ export const AuthProvider = ({ children }) => { // создает компоне
 
     const checkAuth = () => {
         try {
+            // Guard against SSR
+            if (typeof window === 'undefined') {
+                setLoading(false);
+                return;
+            }
+            
             const token = localStorage.getItem('authToken');
             const userData = localStorage.getItem('userData');
 
@@ -33,6 +39,7 @@ export const AuthProvider = ({ children }) => { // создает компоне
     const login = (userData, token) => {
         localStorage.setItem('authToken', token);
         localStorage.setItem('userData', JSON.stringify(userData));
+        localStorage.setItem('token', token); // backward compatibility
         setUser(userData);
         setIsAuthenticated(true)
     }
@@ -45,7 +52,7 @@ export const AuthProvider = ({ children }) => { // создает компоне
     }
 
     return <AuthContext.Provider value={{ // Компонент который делает данные доступными для потомков
-        user, isAuthenticated, loading, login, logout, checkAuth // все данные, которые будут доступны через контекст
+        user, setUser, isAuthenticated, loading, login, logout, checkAuth // все данные, которые будут доступны через контекст
     }}>{children}</AuthContext.Provider> // Все дочерние компоненты, которые будут иметь доступ к данным
 }
 

@@ -1,0 +1,83 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--color-surface);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+
+  &.small {
+    font-size: 13px;
+    
+    .icon {
+      font-size: 14px;
+    }
+  }
+
+  &.medium {
+    font-size: 15px;
+    padding: 6px 10px;
+    
+    .icon {
+      font-size: 16px;
+    }
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.value {
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 220px;
+  max-width: 280px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--color-surface);
+  }
+}
+
+.tooltipTitle {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.tooltipText {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}

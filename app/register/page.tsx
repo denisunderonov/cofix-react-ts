@@ -3,9 +3,13 @@
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import PageContainer from "../components/PageContainer";
+import styles from "../auth.module.scss";
+import { useAuth } from "@/app/contexts/AuthContext";
 
 export default function RegisterForm() {
   const router = useRouter();
+  const { login } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +28,8 @@ export default function RegisterForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4500/api/auth/register", {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4500";
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +44,16 @@ export default function RegisterForm() {
 
       if (res.status === 201 || res.ok) {
         console.log("Аккаунт успешно зарегистрирован", data);
-        router.push("/login");
+        // If server returned token + user, auto-login and navigate home
+        if (data?.token && data?.user) {
+          try {
+            login(data.user, data.token);
+          } catch (e) {
+            console.warn('Auto-login failed:', e);
+          }
+        }
+        router.push("/");
+        router.refresh();
       } else if (res.status === 400) {
         setError(data?.message ?? "Пользователь с таким email уже существует");
       } else {
@@ -54,78 +68,36 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 text-black">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 text-black">
-        <h1 className="text-2xl font-semibold mb-2 text-black">Регистрация</h1>
+    <PageContainer>
+      <div className={styles.authWrap}>
+        <div className={styles.card}>
+        <h1 className={styles.title}>Регистрация</h1>
         {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-            {error}
-          </div>
+          <div className={styles.error}>{error}</div>
         )}
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4"
-          aria-label="login form"
-        >
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium">
-              Имя пользователя
-            </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
-              disabled={loading}
-            />
+        <form onSubmit={handleSubmit} aria-label="registration form">
+          <div className={styles.field}>
+            <label htmlFor="username" className={styles.label}>Имя пользователя</label>
+            <input id="username" name="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} disabled={loading} />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="email" className={styles.label}>Почта</label>
+            <input id="email" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={styles.input} disabled={loading} />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="password" className={styles.label}>Пароль</label>
+            <input id="password" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input} disabled={loading} />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium">
-              Почта
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
-              disabled={loading}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium">
-              Пароль
-            </label>
-            <div className="relative">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full border rounded px-3 py-2 border-slate-200"
-                disabled={loading}
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full px-4 py-2 bg-black text-white rounded hover:bg-gray-800 disabled:bg-gray-400"
-            >
-              {loading ? "Регистрация..." : "Зарегистрироваться"}
-            </button>
+            <button type="submit" disabled={loading} className={`${styles.btn} ${loading ? styles.btnDisabled : styles.btnPrimary}`}>{loading ? 'Регистрация...' : 'Зарегистрироваться'}</button>
           </div>
         </form>
+        </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

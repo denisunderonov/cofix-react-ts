@@ -1,0 +1,203 @@
+/* globals.scss
+   Global SCSS for the app. Uses the palette provided by the designer:
+   - MILK       : #EC5E27  (accent)
+   - GRAY BLUE  : #2b323f  (dark)
+
+   This file contains variables, responsive mixins and base component styles.
+*/
+
+:root {
+  /* Core palette */
+  --color-primary: #EC5E27; /* warm accent */
+  --color-dark: #2b323f;    /* dark blue-grey for headings, surfaces */
+
+  --color-bg: #F7F6F2;      /* light cream background */
+  --color-surface: #FFFFFF; /* white cards */
+  --color-muted: #6B7380;   /* secondary text */
+  --color-accent: #FFB480;  /* light accent */
+  --color-success: #2ECC71;
+  --color-danger: #E04B3A;
+  /* RGB helpers for semi-transparent uses */
+  --color-primary-rgb: 236,94,39; /* #EC5E27 */
+  --color-danger-rgb: 224,75,58;  /* #E04B3A */
+
+  --color-on-primary: #ffffff;
+  --color-on-dark: #ffffff; /* text color used on dark surfaces */
+  --color-text: #0f1720;
+  --color-text-secondary: #6B7380;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-hover: rgba(0, 0, 0, 0.04);
+
+  --radius-md: 8px;
+  --container-max: 1100px;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --color-primary: #FF8C61;        /* warm coral - bright and visible */
+  --color-primary-rgb: 255, 140, 97;
+  --color-dark: #e5e7eb;           /* light for text on dark bg */
+
+  --color-bg: #121212;             /* true dark background */
+  --color-surface: #1e1e1e;        /* slightly lighter dark surface */
+  --color-muted: #a0aec0;          /* light gray for secondary text */
+  --color-accent: #FFB380;
+  --color-success: #4ade80;        /* bright green */
+  --color-danger: #f87171;         /* bright red */
+  --color-danger-rgb: 248, 113, 113;
+
+  --color-on-primary: #ffffff;
+  --color-on-dark: #121212;        /* dark text on light backgrounds */
+  --color-text: #f0f0f0;           /* very light text for high contrast */
+  --color-text-secondary: #a0aec0;
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* small responsive helpers */
+$mobile: 600px;
+$tablet: 900px;
+
+@mixin respond($break) {
+  @if $break == mobile {
+    @media (max-width: $mobile) { @content; }
+  }
+  @else if $break == tablet {
+    @media (max-width: $tablet) { @content; }
+  }
+}
+
+/* Base reset */
+* { 
+  box-sizing: border-box;
+}
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-root { 
+  min-height: 100vh; 
+  display: flex; 
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Layout container */
+.container {
+  width: calc(100% - 32px);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Header */
+.site-header {
+  background: linear-gradient(90deg, var(--color-surface), var(--color-surface));
+  border-bottom: 1px solid rgba(15,17,32,0.04);
+}
+.site-header .header-inner {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.brand {
+  display:flex; align-items:center; gap:12px; color:var(--color-text); font-weight:700; font-size:1.05rem;
+}
+.nav {
+  display:flex; gap:12px; align-items:center;
+}
+.nav a { color:var(--color-text); text-decoration:none; font-weight:600; }
+
+@include respond(tablet) {
+  .nav { display:none; }
+}
+
+/* Utility components */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: 0 6px 18px rgba(15,17,32,0.06);
+  padding: 16px;
+}
+
+.btn {
+  display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; border:1px solid transparent; cursor:pointer; font-weight:700; transition: all 180ms ease; text-decoration:none;
+  /* Modern button look */
+  background: linear-gradient(180deg, rgba(var(--color-primary-rgb),0.12), rgba(255,255,255,0));
+  color: var(--color-text);
+  box-shadow: 0 6px 18px rgba(15,17,32,0.06);
+}
+.btn-primary { background: linear-gradient(180deg, var(--color-primary), color-mix(in srgb, var(--color-primary) 85%, black 15%)); color: var(--color-on-primary); box-shadow: 0 8px 26px rgba(var(--color-primary-rgb),0.18); border: none; }
+.btn-primary:hover { transform: translateY(-1px); filter: brightness(1.02); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost { background: transparent; color: var(--color-text); border-color: rgba(15,17,32,0.06); box-shadow: none; }
+.btn-ghost:hover { background: rgba(var(--color-primary-rgb), 0.08); }
+
+/* Outline variant */
+.btn-outline { background: transparent; border: 1px solid rgba(var(--color-primary-rgb),0.12); color: var(--color-primary); }
+
+/* Accessibility */
+.btn:focus-visible { outline: 3px solid rgba(var(--color-primary-rgb),0.14); outline-offset: 3px; }
+
+/* News list */
+.news-list { display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; }
+.news-item { @extend .card; display:flex; flex-direction:column; gap:12px; }
+.news-item h3 { margin:0; color:var(--color-text); font-size:1.05rem; }
+.news-meta { color:var(--color-muted); font-size:0.9rem; }
+
+@include respond(tablet) {
+  .news-list { grid-template-columns: repeat(2, 1fr); }
+}
+@include respond(mobile) {
+  .news-list { grid-template-columns: 1fr; }
+}
+
+/* Comments area */
+.comments { display:flex; flex-direction:column; gap:12px; }
+.comment { background: rgba(var(--color-primary-rgb), 0.06); padding:12px; border-radius:6px; }
+.comment .author { font-weight:700; color:var(--color-text); }
+.comment .text { color:var(--color-text); margin-top:6px; }
+
+/* Like button */
+.like-btn { background: transparent; border: none; color: var(--color-muted); cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+.like-btn.liked { color: var(--color-danger); } /* red heart when liked */
+
+/* Footer */
+.site-footer { margin-top:auto; padding:24px 0; color:var(--color-muted); text-align:center; }
+
+/* small helpers */
+.muted { color: var(--color-muted); }
+.surface { background: var(--color-surface); }
+
+/* Breadcrumbs (global) */
+.page-breadcrumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(var(--color-primary-rgb), 0.04);
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.page-breadcrumbs .crumb { display: inline-flex; align-items: center; gap: 8px; }
+.page-breadcrumbs .sep { color: rgba(15,17,32,0.18); margin: 0 4px; }
+.page-breadcrumbs .crumb-link { color: var(--color-primary); text-decoration: none; font-weight: 700; }
+.page-breadcrumbs .crumb-link:hover { text-decoration: underline; }
+.page-breadcrumbs .crumb-current { color: var(--color-text); font-weight: 700; }
+
+@include respond(mobile) {
+  .page-breadcrumbs { font-size: 0.88rem; padding: 5px 8px; }
+}
